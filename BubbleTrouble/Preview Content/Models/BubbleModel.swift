@@ -10,13 +10,13 @@ import SwiftUI
 enum BubbleColor: CaseIterable {
     case red, pink, green, blue, black
 
-    var color: Color {
+    var color: String {
         switch self {
-        case .red: return .red
-        case .pink: return .pink
-        case .green: return .green
-        case .blue: return .blue
-        case .black: return .black
+        case .red: return "redbubble"
+        case .pink: return "pinkbubble"
+        case .green: return "greenbubble"
+        case .blue: return "bluebubble"
+        case .black: return "blackbubble"
         }
     }
 

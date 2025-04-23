@@ -14,51 +14,40 @@ struct GamePage: View {
     var body: some View {
         NavigationStack{
             VStack{
-                Text("Current Score:")
+                Text("Current Score: \(viewModel.score)")
                 Spacer()
                 ZStack{
                     Image("Bubble (1)")
                         .resizable()
                         
                     ForEach(viewModel.bubbles) { bubble in
-                        Circle()
-                            .fill(bubble.color.color)
-                            .frame(width: 60, height: 60)
+                        Image(bubble.color.color)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 130)
                             .position(bubble.position)
-                            .scaleEffect(scaleEffect)
-                            .opacity(scaleEffect == 0 ? 0 : 1)
-                            .animation(.easeInOut(duration: 0.2), value: scaleEffect)
                             .onTapGesture {
-                                withAnimation {
-                                    scaleEffect = 0
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                        viewModel.popBubble(bubble)
-                                        scaleEffect = 1
-                                    }
-                                }
+                                viewModel.popBubble(bubble)
                             }
-                        }
-                        VStack {
-                            HStack {
-                                Text("Score: \(viewModel.score)")
-                                Spacer()
-                                Text("Time: \(viewModel.timeLeft)")
-                            }
-                            .padding()
-                            Spacer()
                         }
                 }.toolbar{
                     ToolbarItem(placement:.navigationBarLeading){
                         Text("Highest\nScore:")
                     }
                     ToolbarItem(placement:.navigationBarTrailing){
-                        Text("Timer\n")
+                        Text("Timer:\n 00:\(viewModel.timeLeft)")
                     }
                     //ToolbarItem(placement: .bottomBar){
                       //  Text("Pop as many bubbles as you can in a minute!")
                         //    .fontWeight(.light)
                     //}
                 }
+            }
+            .onAppear {
+                viewModel.startGame()
+            }
+            .sheet(isPresented: .constant(viewModel.timeLeft <= 0)) {
+                EndPage(viewModel: viewModel)
             }
         }
     }

@@ -9,7 +9,7 @@ import SwiftUI
 class BubblePopViewModel: ObservableObject {
     @Published var bubbles: [Bubble] = []
     @Published var score: Int = 0
-    @Published var timeLeft: Int = 60
+    @Published var timeLeft: Int = 59
 
     private var lastPoppedColor: BubbleColor?
     private var consecutiveCount: Int = 0
@@ -17,7 +17,7 @@ class BubblePopViewModel: ObservableObject {
 
     func startGame() {
         score = 0
-        timeLeft = 60
+        timeLeft = 59
         lastPoppedColor = nil
         consecutiveCount = 0
         bubbles = []
@@ -38,11 +38,33 @@ class BubblePopViewModel: ObservableObject {
     }
 
     func spawnBubbles() {
-        // Example: spawn 10 bubbles at random positions
-        bubbles = (0..<10).map { _ in
-            let color = BubbleColor.allCases.randomElement()!
-            let position = CGPoint(x: CGFloat.random(in: 40...300), y: CGFloat.random(in: 100...600))
-            return Bubble(color: color, position: position)
+        var newBubbles: [Bubble] = []
+        var count = 0
+        for _ in 0..<15 {
+            var bubble: Bubble
+            var collision = true
+            var attempts = 0
+            repeat {
+                let color = BubbleColor.allCases.randomElement()!
+                let position = CGPoint(x: CGFloat.random(in: 40...340), y: CGFloat.random(in: 90...640))
+                bubble = Bubble(color: color, position: position)
+                collision = newBubbles.contains { existingBubble in
+                    distanceBetween(bubble.position, existingBubble.position) < 70
+                }
+                attempts += 1
+            } while collision && attempts < 100
+            count+=1
+            if(count>=8){
+                count = 0;
+                break
+            }
+            newBubbles.append(bubble)
+        }
+        bubbles = newBubbles
+        
+        
+        func distanceBetween(_ p1: CGPoint, _ p2: CGPoint) -> CGFloat {
+            sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2))
         }
     }
 
