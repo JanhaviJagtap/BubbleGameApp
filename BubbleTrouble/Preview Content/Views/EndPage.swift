@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct EndPage: View {
+    @ObservedObject var viewModel: BubblePopViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Image("Bubble bg full")
+                .resizable()
+                .scaledToFill()
+            
+            VStack{
+                Text("Game Over!")
+                Text("Your Score:")
+                Button{} label: {
+                    Text("HighScores")
+                }
+                Button{viewModel.startGame()} label:{
+                    Text("Play Again")
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    EndPage()
+    //EndPage(viewModel: <#BubblePopViewModel#>)
 }
