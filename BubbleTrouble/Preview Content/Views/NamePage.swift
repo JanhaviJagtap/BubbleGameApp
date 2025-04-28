@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct NamePage: View {
-    @State var mytext: String = ""
+    @ObservedObject var viewModel = BubblePopViewModel()
+    @State private var myNameInput: String = ""
     var body: some View {
         ZStack {
             Image("Bubble bg full")
@@ -18,25 +19,35 @@ struct NamePage: View {
             VStack{
                 Text("Enter your name")
                     .font(.title3)
-                TextField("Name", text: $mytext)
+                TextField("Name", text: $myNameInput)
                     .multilineTextAlignment(.center)
-                    .padding(.all, 20)
+                    .padding(.all, 10)
                     .background(Color(red: 0.993, green: 0.943, blue: 0.918))
+                    .padding(.vertical, 20)
                     .padding(.horizontal, 100)
                     .autocorrectionDisabled()
                 Spacer()
-
+                
                 Button{
+                    viewModel.playerName = myNameInput
+                    viewModel.startGame()
                 } label: {
                     Text("Lets Go!")
                         .fontWeight(.bold)
                         .font(.largeTitle)
                 }
                 Spacer()
-            }.padding(.top, 100)
+            }.toolbar{
+                ToolbarItem(placement:.navigationBarTrailing){
+                    Image(systemName: "gearshape")
+                }
+            }
+            .padding(.top, 100)
         }
+        
     }
 }
+
 
 #Preview {
     NamePage()

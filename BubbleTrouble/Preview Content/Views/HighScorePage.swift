@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct HighScorePage: View {
+    let highScores: [HighScoreEntry]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Text("High Scores").font(.headline)
+            ForEach(highScores.prefix(10)) { entry in
+                HStack {
+                    Text(entry.playerName)
+                    Spacer()
+                    Text("\(entry.score)")
+                }
+            }
+        }
+        .padding()
     }
-}
-
-#Preview {
-    HighScorePage()
 }

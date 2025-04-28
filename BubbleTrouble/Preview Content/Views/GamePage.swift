@@ -9,7 +9,9 @@ import SwiftUI
 
 struct GamePage: View {
     var myInt = Int.random(in: 10..<16)
-    @StateObject private var viewModel = BubblePopViewModel()
+    @ObservedObject var viewModel: BubblePopViewModel
+    @State private var poppingBubbleID: UUID?
+
 
     var body: some View {
         NavigationStack{
@@ -53,11 +55,12 @@ struct GamePage: View {
     }
 }
 
-#Preview {
-    GamePage()
+struct GamePage_Previews: PreviewProvider {
+    static var previews: some View {
+        GamePage(viewModel:BubblePopViewModel())
+            .environmentObject(BubblePopViewModel())
+    }
 }
-
-
 
 //Image("greenbubble")
   //  .resizable()

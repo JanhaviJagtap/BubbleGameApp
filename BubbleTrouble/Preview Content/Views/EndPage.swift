@@ -9,26 +9,16 @@ import SwiftUI
 
 struct EndPage: View {
     @ObservedObject var viewModel: BubblePopViewModel
+
     var body: some View {
-        ZStack {
-            Image("Bubble bg full")
-                .resizable()
-                .scaledToFill()
-            
-            VStack{
-                Text("Game Over!")
-                Text("Your Score:")
-                Button{} label: {
-                    Text("HighScores")
-                }
-                Button{viewModel.startGame()} label:{
-                    Text("Play Again")
-                }
+        VStack {
+            Text("Game Over!").font(.largeTitle)
+            Text("Score: \(viewModel.score)").font(.title)
+            Button("Play Again") {
+                viewModel.resetGame()
             }
+            .padding()
+            HighScorePage(highScores: viewModel.highScores)
         }
     }
-}
-
-#Preview {
-    //EndPage(viewModel: <#BubblePopViewModel#>)
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum BubbleColor: CaseIterable {
+enum BubbleColor: CaseIterable, Codable {
     case red, pink, green, blue, black
 
     var color: String {
@@ -29,10 +29,29 @@ enum BubbleColor: CaseIterable {
         case .black: return 10
         }
     }
+    
+    static func randomByProbability() -> BubbleColor {
+        let rand = Double.random(in: 0..<1)
+        switch rand {
+        case 0..<0.4: return .red
+        case 0.4..<0.7: return .pink
+        case 0.7..<0.85: return .green
+        case 0.85..<0.95: return .blue
+        default: return .black
+        }
+    }
 }
 
 struct Bubble: Identifiable {
     let id = UUID()
     let color: BubbleColor
     var position: CGPoint
+    static let diameter: CGFloat = 60
+}
+
+struct HighScoreEntry: Identifiable, Codable {
+    let id = UUID()
+    let playerName: String
+    let score: Int
+    let date: Date
 }

@@ -9,28 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            Image("Bubble bg full")
-                .resizable()
-                .scaledToFill()
-            
-            VStack{
-                Image("Title")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 210)
-                Button{
-                } label: {
-                    Image("startButton")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 210)
-                }
-            }.padding(.top, 100)
-        }
+        Text("Hello World!")
+            .font(.title)
+        Text("Head to HomePage :)")
+            .font(.footnote)
     }
 }
 
-#Preview {
+#Preview{
     ContentView()
 }
