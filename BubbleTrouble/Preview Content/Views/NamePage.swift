@@ -22,6 +22,7 @@ struct NamePage: View {
                 TextField("Name", text: $myNameInput)
                     .multilineTextAlignment(.center)
                     .padding(.all, 10)
+                    .foregroundColor(.black)
                     .background(Color(red: 0.993, green: 0.943, blue: 0.918))
                     .padding(.vertical, 20)
                     .padding(.horizontal, 100)
